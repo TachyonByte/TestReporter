@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import (TemplateView, ListView, DetailView,
                                     DeleteView, CreateView, UpdateView,)
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -21,11 +22,18 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     template_name = "reports/project_detail.html"
     context_object_name = "project_detail"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["systems"] = System.objects.filter(project=self.kwargs["pk"])
+        context["features"] = Feature.objects.filter(project=self.kwargs["pk"])
+        return context
+
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     fields = ['name', 'description']
     template_name = "reports/project_create.html"
     context_object_name = "new_project"
+    success_url = reverse_lazy('reports:projects')
 
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
@@ -36,19 +44,16 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
 
 class SystemListView(LoginRequiredMixin, ListView):
     model = System
-    template_name = "reports/pages.html"
+    template_name = "reports/project_detail.html"
     context_object_name = "systems"
-
-class SystemDetailView(LoginRequiredMixin, DetailView):
-    model = System
-    template_name = "reports/system_detail.html"
-    context_object_name = "system_detail"
 
 class SystemCreateView(LoginRequiredMixin, CreateView):
     model = System
-    fields = ['name', 'description']
-    template_name = "reports/project_create.html"
+    fields = ['name', 'description', 'project']
+    template_name = "reports/system_create.html"
     context_object_name = "new_system"
+    success_url = reverse_lazy('reports:projects')
+
 
 
 class SystemUpdateView(LoginRequiredMixin, UpdateView):
@@ -62,16 +67,12 @@ class FeatureListView(LoginRequiredMixin, ListView):
     template_name = "reports/pages.html"
     context_object_name = "features"
 
-class FeatureDetailView(LoginRequiredMixin, DetailView):
-    model = Feature
-    template_name = "reports/project_detail.html"
-    context_object_name = "features_detail"
-
 class FeatureCreateView(LoginRequiredMixin, CreateView):
     model = Feature
-    fields = ['name', 'description']
-    template_name = "reports/project_create.html"
+    fields = '__all__'
+    template_name = "reports/feature_create.html"
     context_object_name = "new_features"
+    success_url = reverse_lazy('reports:projects')
 
 class FeatureUpdateView(LoginRequiredMixin, UpdateView):
     model = Feature
