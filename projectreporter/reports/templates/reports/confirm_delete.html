@@ -1,0 +1,41 @@
+{% extends "dashboard/base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1302.12px;">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{cancel_url}}">Blog {{view}}</a></li>
+                        <li class="breadcrumb-item active">Delete {{view}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h5 class="card-title">Confirm Delete</h5>
+                        <p class="card-text">Are you sure you want to delete <strong>"{{ object }}"</strong>?</p>
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                        <a href="{{cancel_url}}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+              </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

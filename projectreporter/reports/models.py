@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from projects.models import System, Feature, Project
 from cases.models import TestCase
 
+
 class Report(models.Model):
     name = models.CharField(max_length=90)
     features = models.ManyToManyField(Feature)
@@ -22,7 +23,7 @@ class TestResult(models.Model):
     ]
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
     testcase = models.ForeignKey(TestCase, on_delete=models.CASCADE)
-    comment = models.TextField()
+    comment = models.TextField(blank=True)
     result = models.CharField(max_length=90, choices=RESULT_C, default='untested')
     tested_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

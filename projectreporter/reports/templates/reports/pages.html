@@ -1,0 +1,107 @@
+{% extends "dashboard/base.html"%}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1302.12px;">
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Pages</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item active">Blog Pages</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header row">
+                        <div class="col-10">
+                            <h3 class="card-title">All Pages</h3>
+                        </div>
+                        <div class="col-2 text-right">
+                            <a href="{% url 'dashboard:add_page' %}" class="btn btn-primary">Add Page</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
+                                        aria-describedby="example1_info">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="ID"
+                                                    aria-sort="ascending">ID</th>
+                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                                    colspan="1" aria-label="Title"
+                                                    aria-sort="ascending">TITLE</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                    aria-label="Type">SLUG</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                    aria-label="Type">CREATED ON</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                    aria-label="Type">UPDATED ON</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                                    aria-label="Type">ACTION</th>
+                                            </tr>
+                                        </thead>
+                    <tbody>
+                    {% for i in pages %}
+                        
+                        <tr class="even">
+                            <td class="dtr-control sorting_1" tabindex="0">{{forloop.counter}}</td>
+                            <td>{{i.title}}</td>
+                            <td>{{i.slug}}</td>
+                            <td>{{i.created_at}}</td>
+                            <td>{{i.updated_at}}</td>
+                            <td><a href="{% url 'dashboard:delete_page' i.id %}" class="btn btn-danger">Delete</a><a href="{% url 'dashboard:update_page' i.id %}" class="btn btn-warning mx-1">Update</a></td>
+                        </tr>
+                    {% endfor %}
+                    
+                    </table>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button page-item previous {% if not page_obj.has_previous %}disabled{% endif %}" id="example1_previous"><a {% if page_obj.has_previous %}href="?page={{ page_obj.previous_page_number }}"{% endif %}
+                                            aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                            {% for x in page_obj.paginator %}
+                                    <li class="paginate_button page-item"><a href="?page={{forloop.counter}}" aria-controls="example1" data-dt-idx="1"
+                                            tabindex="0" class="page-link">{{forloop.counter}}</a></li>
+                                            {% endfor %}
+                                    <li class="paginate_button page-item next {% if not page_obj.has_next %}disabled{% endif %}" id="example1_next"><a {% if page_obj.has_next %}href="?page={{ page_obj.next_page_number }}"{% endif %} aria-controls="example1"
+                                            data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    
+                    </div>
+            <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+{% endblock %}

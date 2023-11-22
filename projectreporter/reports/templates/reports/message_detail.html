@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html"%}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1302.12px;">
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Contact Form Submissions</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}">Home</a></li>
+            <li class="breadcrumb-item active">Messages</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                      {{message.name}} &bullet; {{message.email}} &bullet; {{message.mobile}}
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title"><strong>{{message.subject}}</strong></h5>
+                      <p class="card-text">{{message.message}}.</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{message.created_at}}
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+{% endblock %}
