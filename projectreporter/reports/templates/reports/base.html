@@ -133,10 +133,10 @@
             </a>
           </li>-->
           <li class="nav-item">
-            <a href="" class="nav-link ">
+            <a href="{% url 'reports:testcases'%}" class="nav-link ">
               <i class="nav-icon fas fa-solid fa-newspaper"></i>
               <p>
-              x
+              TestCases
               </p>
             </a>
           </li>
@@ -144,11 +144,11 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-pager"></i>
               <p>
-              y
+              Reports
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-address-book"></i>
               <p>
@@ -163,7 +163,7 @@
                 Navigation Menu
               </p>
             </a>
-          </li>
+          </li> {% endcomment %}
          
         </ul>
       </nav>
