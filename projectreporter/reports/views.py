@@ -82,7 +82,6 @@ class FeatureCreateView(LoginRequiredMixin, CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['project'] = Project.objects.get(pk=self.kwargs['pk'])
-        initial['system'] = System.objects.get(pk=self.kwargs['spk'])
         return initial
 
 class FeatureUpdateView(LoginRequiredMixin, UpdateView):
@@ -90,6 +89,18 @@ class FeatureUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['name', 'description']
     template_name = "reports/project_update.html"
     context_object_name = "update_features"
+
+
+class FeatureDetailView(LoginRequiredMixin, DetailView):
+    model = Feature
+    template_name = "reports/feature_detail.html"
+    context_object_name = "feature_detail"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["features"] = Feature.objects.filter(project=self.kwargs["pk"])
+        context["testcases"] = TestCase.objects.filter(feature=self.kwargs["pk"])
+        return context
 
 # TestCases List, Create, Detail, Update
 
@@ -108,7 +119,7 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['feature'] = Feature.objects.get(pk=self.kwargs['pk'])
-        initial['system'] = System.objects.get(pk=self.kwargs['spk'])
+        # initial['system'] = System.objects.get(pk=self.kwargs['spk'])
         return initial
 
 class TestCaseDetailView(LoginRequiredMixin, DetailView):

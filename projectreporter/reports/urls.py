@@ -1,13 +1,23 @@
 from django.urls import path
 
 from .views import (ProjectCreateView, ProjectListView,
-                    ProjectDetailView, ProjectUpdateView, SystemCreateView,
-                    SystemListView, SystemUpdateView,
-                    FeatureCreateView, FeatureListView, FeatureUpdateView,
-                    TestCaseCreateView, TestCaseDetailView, TestCaseListView,
-                    TestCaseUpdateView, ReportCreateView, ReportDetailView,
-                    ReportListView, ReportUpdateView, TestResultCreateView,
-                    TestResultDetailView, TestResultListView, TestResultUpdateView)
+                    ProjectDetailView, ProjectUpdateView,
+
+                    SystemCreateView,SystemListView,
+                    SystemUpdateView,
+
+                    FeatureCreateView, FeatureListView,
+                    FeatureUpdateView,FeatureDetailView,
+
+                    TestCaseCreateView, TestCaseDetailView, 
+                    TestCaseListView,TestCaseUpdateView,
+
+                    ReportCreateView,ReportDetailView,
+                    ReportListView, ReportUpdateView,
+                    
+                    TestResultCreateView, TestResultDetailView,
+                    TestResultListView, TestResultUpdateView,
+                    )
 
 app_name = "reports"
 
@@ -24,12 +34,14 @@ urlpatterns = [
     path('Updatde-project/<int:pk>/', SystemUpdateView.as_view(), name='update-system'),
 
     # Feature Urls
-    path('new-feature/<int:pk>/<int:spk>/', FeatureCreateView.as_view(), name='new-feature'),
+    path('new-feature/<int:pk>/', FeatureCreateView.as_view(), name='new-feature'),
     path('features/', FeatureListView.as_view(), name='features'),
     path('Updatde-feature/<int:pk>/', FeatureUpdateView.as_view(), name='update-feature'),
+    path('feature/<int:pk>/', FeatureDetailView.as_view(), name="feature-detail"),
+
 
     # TestCase Urls
-    path('new-testcase/<int:pk>/<int:spk>/', TestCaseCreateView.as_view(), name ="new-testcase"),
+    path('new-testcase/<int:pk>/', TestCaseCreateView.as_view(), name ="new-testcase"),
     path('testcases/', TestCaseListView.as_view(), name="testcases"),
     path('testcase/<int:pk>/', TestCaseDetailView.as_view(), name="testcase-detail"),
     path('Updatde-testcase/<int:pk>/', TestCaseUpdateView.as_view(), name="update-testcase"),
