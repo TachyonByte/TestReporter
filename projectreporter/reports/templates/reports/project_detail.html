@@ -1,0 +1,83 @@
+{% extends "reports/base.html"%}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0"><small>Project name:</small>{{project_detail.name}}</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'reports:projects'%}">Home</a></li>
+            <li class="breadcrumb-item active">Systems</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content overflow-auto">
+    <div class="add text-right mb-3 me-3">
+      <a href="{% url 'reports:new-system' project_detail.id %}"><button class="btn btn-success">New
+          Systems</button></a>
+    </div>
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <div class="card card-primary card-tabs">
+            <div class="card-header p-0 pt-1">
+              <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                <li class="pt-2 px-3">
+                  <h3 class="card-title">Systems</h3>
+                </li>
+
+                {% for s in systems %}
+                <li class="nav-item">
+                  <a class="nav-link " id="custom-tabs-two-{{s.id}}-tab" data-toggle="pill"
+                    href="#custom-tabs-two-{{s.id}}" role="tab" aria-controls="custom-tabs-two-{{s.id}}"
+                    aria-selected="false">{{s.name}}</a>
+                </li>
+                {% endfor %}
+
+
+              </ul>
+            </div>
+
+            <div class="card-body">
+              <div class="tab-content" id="custom-tabs-two-tabContent">
+                {% for s in systems %}
+                <div class="tab-pane fade" id="custom-tabs-two-{{s.id}}" role="tabpanel"
+                  aria-labelledby="custom-tabs-two-{{s.id}}-tab">
+                  <small>Description:</small>&nbsp;&nbsp;{{s.description}}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+      <div class="mt-3">
+        <div class="d-flex justify-content-between">
+          <h4><u>Features:</u></h4>
+          <a href="{% url 'reports:new-feature' project_detail.id %}"><button class="btn btn-success">Add Feature</button></a>
+        </div>
+        <ul class="list-group list-group-flush mt-3">
+          {% for f in features %}
+          <a href="{% url 'reports:feature-detail' f.id %}"><li class="list-group-item">{{f.name}}</li></a>
+          {% endfor %}
+        </ul>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+{% endblock %}

@@ -4,28 +4,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TestReporter Admin Dashboard</title>
-
+  <title>TestReporter Admin reports</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/jqvmap/jqvmap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/jqvmap/jqvmap.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'dashboard/dist/css/adminlte.min.css' %}">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/daterangepicker/daterangepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
-  <link rel="stylesheet" href="{% static 'dashboard/plugins/summernote/summernote-bs4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'reports/plugins/summernote/summernote-bs4.min.css' %}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -37,7 +36,7 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -124,33 +123,33 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="{% url 'dashboard:pages' %}" class="nav-link ">
+              with font-awesome or any other icon font library -->
+          <!--<li class="nav-item">
+            <a href="{% url 'reports:projects'%}" class="nav-link ">
               <i class="nav-icon fas fa-solid fa-scroll"></i>
               <p>
-                Pages
+                Projects
               </p>
             </a>
-          </li>
+          </li>-->
           <li class="nav-item">
-            <a href="{% url 'dashboard:posts' %}" class="nav-link ">
+            <a href="" class="nav-link ">
               <i class="nav-icon fas fa-solid fa-newspaper"></i>
               <p>
-                Blog Posts
+              TestCases
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'dashboard:categories' %}" class="nav-link">
+            <a href="" class="nav-link">
                 <i class="nav-icon fas fa-pager"></i>
               <p>
-                Categories
+              Reports
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{% url 'dashboard:messages' %}" class="nav-link">
+          {% comment %} <li class="nav-item">
+            <a href="" class="nav-link">
                 <i class="nav-icon fas fa-address-book"></i>
               <p>
                 Contact Form
@@ -158,13 +157,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'dashboard:navs' %}" class="nav-link">
+            <a href="" class="nav-link">
                 <i class="nav-icon fas fa-list-ul"></i>
               <p>
                 Navigation Menu
               </p>
             </a>
-          </li>
+          </li> {% endcomment %}
          
         </ul>
       </nav>
@@ -194,48 +193,48 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'reports/plugins/jquery/jquery.min.js' %}"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="{% static 'dashboard/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'reports/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{% static 'dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'reports/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- ChartJS -->
-<script src="{% static 'dashboard/plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'reports/plugins/chart.js/Chart.min.js' %}"></script>
 <!-- Sparkline -->
-<script src="{% static 'dashboard/plugins/sparklines/sparkline.js' %}"></script>
+<script src="{% static 'reports/plugins/sparklines/sparkline.js' %}"></script>
 <!-- JQVMap -->
-<script src="{% static 'dashboard/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<script src="{% static 'reports/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'reports/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
 <!-- jQuery Knob Chart -->
-<script src="{% static 'dashboard/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'reports/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
 <!-- daterangepicker -->
-<script src="{% static 'dashboard/plugins/moment/moment.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'reports/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'reports/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="{% static 'dashboard/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'reports/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
 <!-- Summernote -->
-<script src="{% static 'dashboard/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<script src="{% static 'reports/plugins/summernote/summernote-bs4.min.js' %}"></script>
 <!-- overlayScrollbars -->
-<script src="{% static 'dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'reports/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'dashboard/dist/js/adminlte.js' %}"></script>
 
-<script src="{% static 'dashboard/plugins/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'reports/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="{% static 'dashboard/dist/js/demo.js' %}"></script> -->
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{% static 'dashboard/dist/js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE reports demo (This is only for demo purposes) -->
+<script src="{% static 'dashboard/dist/js/pages/reports.js' %}"></script>
 </body>
 </html>
