@@ -1,0 +1,107 @@
+{% extends "reports/base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Reports</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'reports:projects'%}">Home</a></li>
+                        <li class="breadcrumb-item active">Systems</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="add text-right mb-3 me-3">
+
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+                    New report
+                    </button>
+            </div>
+            <div class="row ">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Reports</h3>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Name</th>
+                                        <th>Features</th>
+                                        <th>Created by</th>
+                                        <th style="width: 40px">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for r in reports %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{r.name}}</td>
+                                        <td>
+                                            <ul>
+                                                {% for n in r.features.all %}
+                                                <li>{{n}}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>{{r.created_by}} &bullet; <small>{{r.created_at}}</small></td>
+                                        {% if r.is_done %}
+                                        <td><i class="fa fa-check" style="color:rgb(14, 219, 25)"></i></td>
+                                        {% else %}
+                                        <td><i class="far fa-window-close" style="color:rgb(223, 52, 22)"></i></td>
+                                        {% endif %}<i class="fa-regular fa-circle-xmark"></i>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Report</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                    <div class="modal-body">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <a href="{% url 'reports:new-report'%}"><button type="submit" class="btn btn-primary">Create</button></a>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</div>
+{% endblock %}

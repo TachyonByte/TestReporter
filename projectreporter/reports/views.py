@@ -122,12 +122,6 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
         # initial['system'] = System.objects.get(pk=self.kwargs['spk'])
         return initial
 
-class TestCaseDetailView(LoginRequiredMixin, DetailView):
-    model = TestCase
-    template_name = "reports/testcase_detail.html"
-    context_object_name = "testcase_detail"
-    
-
 class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
     model = TestCase
     fields = ['name', 'description']
@@ -144,7 +138,7 @@ class ReportListView(LoginRequiredMixin, ListView):
 class ReportCreateView(LoginRequiredMixin, CreateView):
     model = Report
     fields = '__all__'
-    template_name = "reports/reports_create.html"
+    template_name = "reports/report_create.html"
     context_object_name = "new_reports"
     success_url = reverse_lazy('reports:testcases')
 
