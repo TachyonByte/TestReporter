@@ -1,0 +1,51 @@
+{% extends "reports/base.html"%}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0"><small>Report name:</small>{{reports_detail.name}}</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'reports:projects'%}">Home</a></li>
+            <li class="breadcrumb-item active">Systems</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+  <section class="content overflow-auto">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">TestCase</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Result</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for r in result %}
+        <tr>
+            <th scope="row">1</th>
+            <td>{{r.testcase}}</td>
+            <td>{{r.comment}}</td>
+            <td>{{r.result}}</td>
+            <td>{{r.tested_by}}<br> &bullet; <small>{{r.created_at}}</small></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  </section>
+
+
+
+</div>
+{% endblock %}

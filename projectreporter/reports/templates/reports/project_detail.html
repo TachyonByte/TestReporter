@@ -72,7 +72,30 @@
         </div>
         <ul class="list-group list-group-flush mt-3">
           {% for f in features %}
-          <a href="{% url 'reports:feature-detail' f.id %}"><li class="list-group-item">{{f.name}}</li></a>
+          <li class="list-group-item"><a href="{% url 'reports:feature-detail' f.id %}">{{f.name}}</a><br>
+          <small>{{f.created_by}} &bullet; {{f.created_at}}</small></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mt-3">
+        <div class="d-flex justify-content-between">
+          <h4><u>Reports:</u></h4>
+          <a href="{% url 'reports:new-report' %}">
+            <button class="btn btn-success">Add Report</button>
+          </a>
+        </div>
+        <ul class="list-group list-group-flush mt-3">
+          {% for r in reports %}
+          <li class="list-group-item"><a href="{% url 'reports:report_detail' r.id %}">{{r.name}}</a>
+            <div class="d-flex justify-content-between">
+              <small>{{r.created_by}} &bullet;{{r.created_at}}</small>
+              {% if r.is_done %}
+              <span class="badge badge-pill badge-success">Done</span>
+              {% else %}
+              <span class="badge badge-pill badge-secondary">Pending..</span>
+              {% endif %}
+            </div>
+          </li>
           {% endfor %}
         </ul>
       </div>

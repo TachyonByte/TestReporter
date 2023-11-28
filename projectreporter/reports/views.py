@@ -27,6 +27,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["systems"] = System.objects.filter(project=self.kwargs["pk"])
         context["features"] = Feature.objects.filter(project=self.kwargs["pk"])
+        context["reports"] = Report.objects.filter(features=self.kwargs["pk"])
         return context
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
@@ -144,9 +145,14 @@ class ReportCreateView(LoginRequiredMixin, CreateView):
 
 class ReportDetailView(LoginRequiredMixin, DetailView):
     model = Report
-    template_name = "reports/reports_detail.html"
+    template_name = "reports/report_detail.html"
     context_object_name = "reports_detail"
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["result"] = TestResult.objects.filter(report=self.kwargs["pk"])
+
+        return context
 
 class ReportUpdateView(LoginRequiredMixin, UpdateView):
     model = Report
@@ -158,24 +164,18 @@ class ReportUpdateView(LoginRequiredMixin, UpdateView):
 
 class TestResultListView(LoginRequiredMixin, ListView):
     model = TestResult
-    template_name = "reports/reports.html"
-    context_object_name = "reports"
+    template_name = "reports/result.html"
+    context_object_name = "result"
 
 class TestResultCreateView(LoginRequiredMixin, CreateView):
     model = TestResult
     fields = '__all__'
-    template_name = "reports/reports_create.html"
-    context_object_name = "new_reports"
-    success_url = reverse_lazy('reports:testcases')
-
-class TestResultDetailView(LoginRequiredMixin, DetailView):
-    model = TestResult
-    template_name = "reports/reports_detail.html"
-    context_object_name = "reports_detail"
-    
+    template_name = "reports/testresult_create.html"
+    context_object_name = "new_result"
+    success_url = reverse_lazy('reports:report')
 
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
     model = TestResult
     fields = ['name', 'description']
-    template_name = "reports/reports_update.html"
-    context_object_name = "update_reports"
+    template_name = "reports/result_update.html"
+    context_object_name = "update_result"
