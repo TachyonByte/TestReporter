@@ -9,14 +9,14 @@ from .views import (ProjectCreateView, ProjectListView,
                     FeatureCreateView, FeatureListView,
                     FeatureUpdateView,FeatureDetailView,
 
-                    TestCaseCreateView, TestCaseDetailView, 
-                    TestCaseListView,TestCaseUpdateView,
+                    TestCaseCreateView,TestCaseListView,
+                    TestCaseUpdateView,
 
                     ReportCreateView,ReportDetailView,
                     ReportListView, ReportUpdateView,
                     
-                    TestResultCreateView, TestResultDetailView,
-                    TestResultListView, TestResultUpdateView,
+                    TestResultCreateView,TestResultListView,
+                    TestResultUpdateView,
                     )
 
 app_name = "reports"
@@ -43,18 +43,16 @@ urlpatterns = [
     # TestCase Urls
     path('new-testcase/<int:pk>/', TestCaseCreateView.as_view(), name ="new-testcase"),
     path('testcases/', TestCaseListView.as_view(), name="testcases"),
-    path('testcase/<int:pk>/', TestCaseDetailView.as_view(), name="testcase-detail"),
     path('Updatde-testcase/<int:pk>/', TestCaseUpdateView.as_view(), name="update-testcase"),
 
     # Report Urls
     path('new-report/', ReportCreateView.as_view(), name='new-report'),
-    path('reports', ReportListView.as_view(), name='reports'),
-    path('project/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
+    path('reports/', ReportListView.as_view(), name='reports'),
+    path('report/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
     path('Updatde-project/<int:pk>/', ReportUpdateView.as_view(), name='update-report'),
 
     # TestResult Urls
     path('new-testresult/', TestResultCreateView.as_view(), name='new-testresult'),
     path('testresult', TestResultListView.as_view(), name='testresults'),
-    path('testresult/<int:pk>/', TestResultDetailView.as_view(), name='testresult_detail'),
     path('Updatde-testresult/<int:pk>/', TestResultUpdateView.as_view(), name='update-testresult'),
 ]
