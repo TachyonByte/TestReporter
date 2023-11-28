@@ -31,7 +31,7 @@ urlpatterns = [
     # System Urls
     path('new-system/<int:pk>/', SystemCreateView.as_view(), name='new-system'),
     path('systems/', SystemListView.as_view(), name='systems'),
-    path('Updatde-project/<int:pk>/', SystemUpdateView.as_view(), name='update-system'),
+    path('Updatde-system/<int:pk>/', SystemUpdateView.as_view(), name='update-system'),
 
     # Feature Urls
     path('new-feature/<int:pk>/', FeatureCreateView.as_view(), name='new-feature'),
@@ -49,7 +49,7 @@ urlpatterns = [
     path('new-report/', ReportCreateView.as_view(), name='new-report'),
     path('reports/', ReportListView.as_view(), name='reports'),
     path('report/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
-    path('Updatde-project/<int:pk>/', ReportUpdateView.as_view(), name='update-report'),
+    path('Updatde-report/<int:pk>/', ReportUpdateView.as_view(), name='update-report'),
 
     # TestResult Urls
     path('new-testresult/', TestResultCreateView.as_view(), name='new-testresult'),

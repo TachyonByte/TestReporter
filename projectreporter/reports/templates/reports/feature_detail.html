@@ -36,7 +36,13 @@
             </div>
               <ul class="list-group list-group-flush mt-3">
                 {% for t in testcases %}
-                <li class="list-group-item"><b>--{{t.name}}</b><br><u>Test Desc:</u> {{t.description}}</li>
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between">
+                  <b>--{{t.name}}</b>
+                  <a href="{% url 'reports:update-testcase' t.id %}"><i class="fa fa-pen-square" style="font-size: 20px; color: royalblue;"></i></a>
+                  </div>
+                  <u>Test Desc:</u> {{t.description}}
+                </li>
                 {% endfor %}
               </ul>
 

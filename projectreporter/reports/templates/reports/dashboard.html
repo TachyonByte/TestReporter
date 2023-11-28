@@ -34,12 +34,12 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
+              <div class="d-flex justify-content-between">
               <h4>{{p.name}}</h4>
+              <a href="{% url 'reports:update-project' p.id %}" class="text-white"><i class="fa fa-pen-square" style="font-size: 30px;"></i></a>
+              </div>
               <small>{{p.description}}</small><br>
               <small>{{p.created_at}}</small>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
             </div>
             <a href="{% url 'reports:project_detail' p.id %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
