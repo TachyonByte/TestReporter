@@ -21,6 +21,7 @@
   </div>
   <!-- /.content-header -->
   <section class="content overflow-auto">
+    
     <table class="table table-striped">
         <thead>
           <tr>
@@ -40,13 +41,12 @@
             <td>{{r.comment}}</td>
             <td>{{r.result}}</td>
             <td>{{r.tested_by}}<br> &bullet; <small>{{r.created_at}}</small></td>
-            <td>
-              <form method="post">
-              {% csrf_token %}
-              {{ form|crispy }}
-              <input class="btn btn-outline-success btn-sm mt-2" type="submit" value='Add'>
-                  <a href="{% url 'reports:projects'%}" class='btn btn-outline-danger btn-sm mt-2'>Cancel</a> 
-              </form>
+            <td>{% if r.result == 'passed' %}
+              {% else %}
+              <a href="{% url 'reports:update-testresult' r.id %}">
+                <i class="fa fa-pen-square" style="font-size: 25px; color: royalblue;"></i>
+              </a>
+              {% endif %}
             </td>
         </tr>
         {% endfor %}

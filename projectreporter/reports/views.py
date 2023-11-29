@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from cases.models import TestCase, ChildTestCase
 from projects.models import Project, System, Feature
 from reports.models import Report, TestResult
-from .forms import TestresultForm
+
 
 
 
@@ -187,32 +187,14 @@ class ReportDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["result"] = TestResult.objects.filter(report=self.kwargs["pk"])
-        context['form'] = TestresultForm(initial={'post': self.object})
         return context
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super(ReportDetailView, self).form_valid(form)
 class ReportUpdateView(LoginRequiredMixin, UpdateView):
     model = Report
     fields =["is_done"]
     template_name = "reports/reports_update.html"
     context_object_name = "update_reports"
-
-    def get_success_url(self):
-        referer_url = self.request.META.get("HTTP_REFERER")
-        if referer_url:
-            return referer_url
-        else:
-            return reverse_lazy('reports:projects')
+    success_url = reverse_lazy("reports:projects")
 # TestResult List, Create, Detail, Update
 
 class TestResultListView(LoginRequiredMixin, ListView):
@@ -220,16 +202,16 @@ class TestResultListView(LoginRequiredMixin, ListView):
     template_name = "reports/result.html"
     context_object_name = "result"
 
-class TestResultCreateView(LoginRequiredMixin, CreateView):
-    model = TestResult
-    fields = ['comment', 'result']
-    template_name = "reports/report_detail.html"
-    context_object_name = "new_result"
-    success_url = reverse_lazy('reports:report')
+# class TestResultCreateView(LoginRequiredMixin, CreateView):
+#     model = TestResult
+#     fields = ['comment', 'result']
+#     template_name = "reports/report_detail.html"
+#     context_object_name = "new_result"
+#     success_url = reverse_lazy('reports:report')
 
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
     model = TestResult
-    fields = ['comment', 'result']
-    template_name = "reports/report_detail.html"
+    fields = '__all__'
+    template_name = "reports/testresult_update.html"
     context_object_name = "update_result"
     success_url= reverse_lazy("reports:projects")
