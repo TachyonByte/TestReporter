@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from projects.models import System, Feature, Project
+from projects.models import System, Feature
 
 
 class TestCase(models.Model):

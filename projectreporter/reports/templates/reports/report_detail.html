@@ -29,6 +29,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Feature</th>
             <th scope="col">TestCase</th>
             <th scope="col">Comment</th>
             <th scope="col">Result</th>
@@ -40,6 +41,7 @@
         {% for r in result %}
         <tr>
             <th scope="row">1</th>
+            <td>{{r.testcase.feature}}</td>
             <td>{{r.testcase}}</td>
             <td>{{r.comment}}</td>
             <td>{{r.result}}</td>
