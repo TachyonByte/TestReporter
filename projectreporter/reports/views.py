@@ -93,21 +93,18 @@ class FeatureListView(LoginRequiredMixin, ListView):
 
 class FeatureCreateView(LoginRequiredMixin, CreateView):
     model = Feature
-    fields = '__all__'
+    fields = ['name', 'description',]
     template_name = "reports/feature_create.html"
     context_object_name = "new_features"
 
     def get_success_url(self):
-        referer_url = self.request.META.get("HTTP_REFERER")
-        if referer_url:
-            return referer_url
-        else:
-            return reverse_lazy('reports:projects')
+        return reverse_lazy('reports:project_detail',
+                            kwargs={'pk': self.kwargs['pk']})
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['project'] = Project.objects.get(pk=self.kwargs['pk'])
-        return initial
+    def form_valid(self, form):
+        form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class FeatureUpdateView(LoginRequiredMixin, UpdateView):
@@ -147,16 +144,18 @@ class TestCaseListView(LoginRequiredMixin, ListView):
 
 class TestCaseCreateView(LoginRequiredMixin, CreateView):
     model = TestCase
-    fields = '__all__'
+    fields = ['system', 'name', 'description',]
     template_name = "reports/testcase_create.html"
     context_object_name = "new_testcases"
-    success_url = reverse_lazy("reports:projects")
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['feature'] = Feature.objects.get(pk=self.kwargs['pk'])
-        # initial['system'] = System.objects.get(pk=self.kwargs['spk'])
-        return initial
+    def get_success_url(self):
+        return reverse_lazy('reports:feature-detail',
+                            kwargs={'pk': self.kwargs['pk']})
+   
+    def form_valid(self, form):
+        form.instance.feature = Feature.objects.get(pk=self.kwargs['pk'])
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
@@ -177,18 +176,16 @@ class ReportListView(LoginRequiredMixin, ListView):
 
 class ReportCreateView(LoginRequiredMixin, CreateView):
     model = Report
-    fields = '__all__'
+    fields = ['name', 'features',]
     template_name = "reports/report_create.html"
     context_object_name = "new_reports"
 
     def get_success_url(self):
-        referer_url = self.request.META.get("HTTP_REFERER")
-        if referer_url:
-            return referer_url
-        else:
-            return reverse_lazy('reports:projects')
+        return reverse_lazy('reports:project_detail',
+                            kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
+        form.instance.created_by = self.request.user
         form.save()
         obj = Report.objects.get(name=form.cleaned_data.get('name'))
         test_cases = TestCase.objects.filter(
@@ -217,7 +214,11 @@ class ReportUpdateView(LoginRequiredMixin, UpdateView):
     fields = ["is_done"]
     template_name = "reports/reports_update.html"
     context_object_name = "update_reports"
-    success_url = reverse_lazy("reports:projects")
+
+    def get_success_url(self):
+        return reverse_lazy('reports:project_detail',
+                            kwargs={'pk': self.kwargs['p_pk']})
+
 # TestResult List, Create, Detail, Update
 
 

@@ -34,7 +34,7 @@
                             {% csrf_token %}
                             {{ form|crispy }}
                             <center><input class="btn btn-outline-success mt-2" type="submit" value='Add'>
-                                <a href="{% url 'reports:projects' %}" class='btn btn-outline-danger mt-2'>Cancel</a>
+                                <a href="{{request.META.HTTP_REFERER}}" class='btn btn-outline-danger mt-2'>Cancel</a>
                             </center>
                         </form>
 

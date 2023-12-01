@@ -58,7 +58,7 @@ urlpatterns = [
     path('new-report/', ReportCreateView.as_view(), name='new-report'),
     path('reports/', ReportListView.as_view(), name='reports'),
     path('report/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
-    path('Updatde-report/<int:pk>/',
+    path('Updatde-report/<int:p_pk>/<int:pk>/',
          ReportUpdateView.as_view(), name='update-report'),
 
     # TestResult Urls

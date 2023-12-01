@@ -98,7 +98,7 @@
               <a href="{% url 'reports:report_detail' r.id %}">{{r.name}}</a>
               {% if r.is_done %}
               {% else %}
-              <a href="{% url 'reports:update-report' r.id %}"><i class="fa fa-pen-square" style="font-size: 20px; color: royalblue;"></i></a>
+              <a href="{% url 'reports:update-report' project_detail.id r.id %}"><i class="fa fa-pen-square" style="font-size: 20px; color: royalblue;"></i></a>
               {% endif %}
             </div>
             <div class="d-flex justify-content-between">
