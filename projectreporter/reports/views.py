@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic.edit import FormMixin
 from django.views.generic import (TemplateView, ListView, DetailView,
                                     DeleteView, CreateView, UpdateView,)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cases.models import TestCase, ChildTestCase
 from projects.models import Project, System, Feature
 from reports.models import Report, TestResult
+
 
 
 
@@ -42,6 +44,7 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['name', 'description']
     template_name = "reports/project_update.html"
     context_object_name = "update_project"
+    success_url = reverse_lazy('reports:projects')
 
 # System List, Create, Update Views
 class SystemListView(LoginRequiredMixin, ListView):
@@ -54,7 +57,13 @@ class SystemCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'description', 'project']
     template_name = "reports/system_create.html"
     context_object_name = "new_system"
-    success_url = reverse_lazy('reports:projects')
+
+    def get_success_url(self):
+        referer_url = self.request.META.get("HTTP_REFERER")
+        if referer_url:
+            return referer_url
+        else:
+            return reverse_lazy('reports:projects')
 
     def get_initial(self):
         initial = super().get_initial()
@@ -63,9 +72,16 @@ class SystemCreateView(LoginRequiredMixin, CreateView):
 
 class SystemUpdateView(LoginRequiredMixin, UpdateView):
     model = System
-    fields = ['name', 'description']
-    template_name = "reports/project_update.html"
+    fields ="__all__"
+    template_name = "reports/system_update.html"
     context_object_name = "update_system"
+
+    def get_success_url(self):
+        referer_url = self.request.META.get("HTTP_REFERER")
+        if referer_url:
+            return referer_url
+        else:
+            return reverse_lazy('reports:projects')
 
 # Feature List, Create, Update Views
 class FeatureListView(LoginRequiredMixin, ListView):
@@ -78,7 +94,13 @@ class FeatureCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = "reports/feature_create.html"
     context_object_name = "new_features"
-    success_url = reverse_lazy('reports:projects')
+
+    def get_success_url(self):
+        referer_url = self.request.META.get("HTTP_REFERER")
+        if referer_url:
+            return referer_url
+        else:
+            return reverse_lazy('reports:projects')
 
     def get_initial(self):
         initial = super().get_initial()
@@ -88,9 +110,15 @@ class FeatureCreateView(LoginRequiredMixin, CreateView):
 class FeatureUpdateView(LoginRequiredMixin, UpdateView):
     model = Feature
     fields = ['name', 'description']
-    template_name = "reports/project_update.html"
+    template_name = "reports/feature_update.html"
     context_object_name = "update_features"
 
+    def get_success_url(self):
+        referer_url = self.request.META.get("HTTP_REFERER")
+        if referer_url:
+            return referer_url
+        else:
+            return reverse_lazy('reports:projects')
 
 class FeatureDetailView(LoginRequiredMixin, DetailView):
     model = Feature
@@ -115,7 +143,8 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = "reports/testcase_create.html"
     context_object_name = "new_testcases"
-    success_url = reverse_lazy('reports:testcases')
+    success_url =reverse_lazy("reports:projects")
+
 
     def get_initial(self):
         initial = super().get_initial()
@@ -128,6 +157,7 @@ class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['name', 'description']
     template_name = "reports/testcase_update.html"
     context_object_name = "update_testcases"
+    success_url =reverse_lazy("reports:projects")
 
 # Report List, Create, Detail, Update
 
@@ -141,7 +171,13 @@ class ReportCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = "reports/report_create.html"
     context_object_name = "new_reports"
-    success_url = reverse_lazy('reports:testcases')
+
+    def get_success_url(self):
+        referer_url = self.request.META.get("HTTP_REFERER")
+        if referer_url:
+            return referer_url
+        else:
+            return reverse_lazy('reports:projects')
 
 class ReportDetailView(LoginRequiredMixin, DetailView):
     model = Report
@@ -151,15 +187,14 @@ class ReportDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["result"] = TestResult.objects.filter(report=self.kwargs["pk"])
-
         return context
 
 class ReportUpdateView(LoginRequiredMixin, UpdateView):
     model = Report
-    fields = ['name', 'description']
+    fields =["is_done"]
     template_name = "reports/reports_update.html"
     context_object_name = "update_reports"
-
+    success_url = reverse_lazy("reports:projects")
 # TestResult List, Create, Detail, Update
 
 class TestResultListView(LoginRequiredMixin, ListView):
@@ -171,11 +206,12 @@ class TestResultCreateView(LoginRequiredMixin, CreateView):
     model = TestResult
     fields = '__all__'
     template_name = "reports/testresult_create.html"
-    context_object_name = "new_result"
+    context_object_name = "new_testresult"
     success_url = reverse_lazy('reports:report')
 
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
     model = TestResult
-    fields = ['name', 'description']
-    template_name = "reports/result_update.html"
+    fields = '__all__'
+    template_name = "reports/testresult_update.html"
     context_object_name = "update_result"
+    success_url= reverse_lazy("reports:projects")

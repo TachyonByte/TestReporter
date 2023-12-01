@@ -55,6 +55,9 @@
                 {% for s in systems %}
                 <div class="tab-pane fade" id="custom-tabs-two-{{s.id}}" role="tabpanel"
                   aria-labelledby="custom-tabs-two-{{s.id}}-tab">
+                  <div class="text-right">
+                  <a href="{% url 'reports:update-system' s.id %}"><i class="fa fa-pen-square" style="font-size: 25px; color: royalblue;"></i></a><br>
+                  </div>
                   <small>Description:</small>&nbsp;&nbsp;{{s.description}}
                 </div>
                 {% endfor %}
@@ -72,7 +75,11 @@
         </div>
         <ul class="list-group list-group-flush mt-3">
           {% for f in features %}
-          <li class="list-group-item"><a href="{% url 'reports:feature-detail' f.id %}">{{f.name}}</a><br>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'reports:feature-detail' f.id %}">{{f.name}}</a>
+              <a href="{% url 'reports:update-feature' f.id %}"><i class="fa fa-pen-square" style="font-size: 25px; color: royalblue;"></i></a>
+            </div>
           <small>{{f.created_by}} &bullet; {{f.created_at}}</small></li>
           {% endfor %}
         </ul>
@@ -86,7 +93,14 @@
         </div>
         <ul class="list-group list-group-flush mt-3">
           {% for r in reports %}
-          <li class="list-group-item"><a href="{% url 'reports:report_detail' r.id %}">{{r.name}}</a>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'reports:report_detail' r.id %}">{{r.name}}</a>
+              {% if r.is_done %}
+              {% else %}
+              <a href="{% url 'reports:update-report' r.id %}"><i class="fa fa-pen-square" style="font-size: 20px; color: royalblue;"></i></a>
+              {% endif %}
+            </div>
             <div class="d-flex justify-content-between">
               <small>{{r.created_by}} &bullet;{{r.created_at}}</small>
               {% if r.is_done %}

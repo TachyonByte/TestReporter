@@ -1,6 +1,6 @@
 {% extends "reports/base.html"%}
 {% load static %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -21,6 +21,10 @@
   </div>
   <!-- /.content-header -->
   <section class="content overflow-auto">
+    <div class="add text-right mb-3 me-3">
+      <a href="{% url 'reports:new-testresult' %}"><button class="btn btn-success">New
+          TestResult</button></a>
+    </div>
     <table class="table table-striped">
         <thead>
           <tr>
@@ -29,6 +33,7 @@
             <th scope="col">Comment</th>
             <th scope="col">Result</th>
             <th scope="col">Details</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +44,13 @@
             <td>{{r.comment}}</td>
             <td>{{r.result}}</td>
             <td>{{r.tested_by}}<br> &bullet; <small>{{r.created_at}}</small></td>
+            <td>{% if r.result == 'passed' %}
+              {% else %}
+              <a href="{% url 'reports:update-testresult' r.id %}">
+                <i class="fa fa-pen-square" style="font-size: 25px; color: royalblue;"></i>
+              </a>
+              {% endif %}
+            </td>
         </tr>
         {% endfor %}
         </tbody>
