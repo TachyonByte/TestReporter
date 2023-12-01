@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from projects.models import System, Feature, Project
+from projects.models import Feature
 from cases.models import TestCase
 
 
@@ -25,6 +25,7 @@ class Report(models.Model):
         return self.name
 
 
+
 class TestResult(models.Model):
     """
     Model to store information about Results of Tests.
@@ -47,9 +48,9 @@ class TestResult(models.Model):
     testcase = models.ForeignKey(TestCase, on_delete=models.CASCADE)
     comment = models.TextField(blank=True)
     result = models.CharField(max_length=90, choices=RESULT_C,
-                            default='untested')
+                              default='untested')
     tested_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
-                                null=True)
+                                  null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
