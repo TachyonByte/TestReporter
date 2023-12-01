@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib.auth.views import LoginView
 from .views import (ProjectCreateView, ProjectListView,
                     ProjectDetailView, ProjectUpdateView,
 
@@ -22,9 +22,10 @@ from .views import (ProjectCreateView, ProjectListView,
 app_name = "reports"
 
 urlpatterns = [
+    path('', LoginView.as_view(template_name="reports/login.html"), name='login'),
     # Project Urls
     path('new-project/', ProjectCreateView.as_view(), name='new-project'),
-    path('', ProjectListView.as_view(), name='projects'),
+    path('dashboard/', ProjectListView.as_view(), name='projects'),
     path('project/<int:pk>/', ProjectDetailView.as_view(),
          name='project_detail'),
     path('Updatde-project/<int:pk>/',
