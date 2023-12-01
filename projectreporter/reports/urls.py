@@ -55,7 +55,7 @@ urlpatterns = [
          TestCaseUpdateView.as_view(), name="update-testcase"),
 
     # Report Urls
-    path('new-report/', ReportCreateView.as_view(), name='new-report'),
+    path('new-report/<int:pk>/', ReportCreateView.as_view(), name='new-report'),
     path('reports/', ReportListView.as_view(), name='reports'),
     path('report/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
     path('Updatde-report/<int:p_pk>/<int:pk>/',

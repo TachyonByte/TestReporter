@@ -26,7 +26,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["systems"] = System.objects.filter(project=self.kwargs["pk"])
         context["features"] = Feature.objects.filter(project=self.kwargs["pk"])
-        context["reports"] = Report.objects.filter(features=self.kwargs["pk"])
+        context["reports"] = Report.objects.filter(features__in=context["features"])
         return context
 
 
@@ -151,7 +151,7 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('reports:feature-detail',
                             kwargs={'pk': self.kwargs['pk']})
-   
+    
     def form_valid(self, form):
         form.instance.feature = Feature.objects.get(pk=self.kwargs['pk'])
         form.instance.created_by = self.request.user
@@ -172,7 +172,6 @@ class ReportListView(LoginRequiredMixin, ListView):
     model = Report
     template_name = "reports/reports.html"
     context_object_name = "reports"
-
 
 class ReportCreateView(LoginRequiredMixin, CreateView):
     model = Report
