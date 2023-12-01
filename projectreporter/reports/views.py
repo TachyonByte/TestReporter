@@ -161,7 +161,6 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
         initial['feature'] = Feature.objects.get(pk=self.kwargs['pk'])
         # initial['system'] = System.objects.get(pk=self.kwargs['spk'])
         return initial
-    
 
 
 class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
@@ -192,18 +191,18 @@ class ReportCreateView(LoginRequiredMixin, CreateView):
             return referer_url
         else:
             return reverse_lazy('reports:projects')
-    
+
     def form_valid(self, form):
         form.save()
         obj = Report.objects.get(name=form.cleaned_data.get('name'))
-        test_cases = TestCase.objects.filter(feature__in=form.cleaned_data.get('features'))
+        test_cases = TestCase.objects.filter(
+            feature__in=form.cleaned_data.get('features'))
         for test in test_cases:
             test_result = TestResult.objects.create(
                 report=obj, testcase=test,
             )
             test_result.save()
         return super().form_valid(form)
-    
 
 
 class ReportDetailView(LoginRequiredMixin, DetailView):

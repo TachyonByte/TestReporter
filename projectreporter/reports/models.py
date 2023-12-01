@@ -25,7 +25,6 @@ class Report(models.Model):
         return self.name
 
 
-
 class TestResult(models.Model):
     """
     Model to store information about Results of Tests.
