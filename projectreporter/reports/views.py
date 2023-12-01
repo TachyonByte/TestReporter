@@ -56,21 +56,17 @@ class SystemListView(LoginRequiredMixin, ListView):
 
 class SystemCreateView(LoginRequiredMixin, CreateView):
     model = System
-    fields = ['name', 'description', 'project']
+    fields = ['name', 'description']
     template_name = "reports/system_create.html"
     context_object_name = "new_system"
 
     def get_success_url(self):
-        referer_url = self.request.META.get("HTTP_REFERER")
-        if referer_url:
-            return referer_url
-        else:
-            return reverse_lazy('reports:projects')
+        return reverse_lazy('reports:project_detail',
+                            kwargs={'pk': self.kwargs['pk']})
 
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['project'] = Project.objects.get(pk=self.kwargs['pk'])
-        return initial
+    def form_valid(self, form):
+        form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
 
 
 class SystemUpdateView(LoginRequiredMixin, UpdateView):
