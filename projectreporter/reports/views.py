@@ -202,12 +202,12 @@ class TestResultListView(LoginRequiredMixin, ListView):
     template_name = "reports/result.html"
     context_object_name = "result"
 
-# class TestResultCreateView(LoginRequiredMixin, CreateView):
-#     model = TestResult
-#     fields = ['comment', 'result']
-#     template_name = "reports/report_detail.html"
-#     context_object_name = "new_result"
-#     success_url = reverse_lazy('reports:report')
+class TestResultCreateView(LoginRequiredMixin, CreateView):
+    model = TestResult
+    fields = '__all__'
+    template_name = "reports/testresult_create.html"
+    context_object_name = "new_testresult"
+    success_url = reverse_lazy('reports:report')
 
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
     model = TestResult

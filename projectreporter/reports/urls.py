@@ -15,7 +15,7 @@ from .views import (ProjectCreateView, ProjectListView,
                     ReportCreateView,ReportDetailView,
                     ReportListView, ReportUpdateView,
                     
-                    TestResultListView,
+                    TestResultListView, TestResultCreateView,
                     TestResultUpdateView,
                     )
 
@@ -52,7 +52,7 @@ urlpatterns = [
     path('Updatde-report/<int:pk>/', ReportUpdateView.as_view(), name='update-report'),
 
     # TestResult Urls
-    # path('new-testresult/', TestResultCreateView.as_view(), name='new-testresult'),
+    path('new-testresult/', TestResultCreateView.as_view(), name='new-testresult'),
     path('testresult', TestResultListView.as_view(), name='testresults'),
     path('Updatde-testresult/<int:pk>/', TestResultUpdateView.as_view(), name='update-testresult'),
 ]
