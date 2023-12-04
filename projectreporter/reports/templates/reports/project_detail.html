@@ -87,7 +87,7 @@
       <div class="mt-3">
         <div class="d-flex justify-content-between">
           <h4><u>Reports:</u></h4>
-          <a href="{% url 'reports:new-report' %}">
+          <a href="{% url 'reports:new-report' project_detail.id %}">
             <button class="btn btn-success">Add Report</button>
           </a>
         </div>

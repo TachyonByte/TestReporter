@@ -32,7 +32,7 @@
               <p class="card-text">{{feature_detail.description}}.</p>
               <div class="d-flex justify-content-between">
               <h5> &bullet; TestCases: </h5>
-              <a href="{% url 'reports:new-testcase' feature_detail.project.id %}"><button class="btn btn-success">Add TestCase</button></a>
+              <a href="{% url 'reports:new-testcase' feature_detail.id %}"><button class="btn btn-success">Add TestCase</button></a>
             </div>
               <ul class="list-group list-group-flush mt-3">
                 {% for t in testcases %}

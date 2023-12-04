@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import (ListView, DetailView,
-                                  CreateView, UpdateView,)
+                                    CreateView, UpdateView,)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cases.models import TestCase
 from projects.models import Project, System, Feature
@@ -12,12 +12,14 @@ from reports.models import Report, TestResult
 
 # Project List, Detail, Create, Update Views
 class ProjectListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = Project
     template_name = "reports/dashboard.html"
     context_object_name = "projects"
 
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy("reports:login")
     model = Project
     template_name = "reports/project_detail.html"
     context_object_name = "project_detail"
@@ -26,11 +28,12 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["systems"] = System.objects.filter(project=self.kwargs["pk"])
         context["features"] = Feature.objects.filter(project=self.kwargs["pk"])
-        context["reports"] = Report.objects.filter(features=self.kwargs["pk"])
+        context["reports"] = Report.objects.filter(features__in=context["features"])
         return context
 
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = Project
     fields = ['name', 'description']
     template_name = "reports/project_create.html"
@@ -39,6 +42,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = Project
     fields = ['name', 'description']
     template_name = "reports/project_update.html"
@@ -49,12 +53,14 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class SystemListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = System
     template_name = "reports/project_detail.html"
     context_object_name = "systems"
 
 
 class SystemCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = System
     fields = ['name', 'description']
     template_name = "reports/system_create.html"
@@ -70,6 +76,7 @@ class SystemCreateView(LoginRequiredMixin, CreateView):
 
 
 class SystemUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = System
     fields = "__all__"
     template_name = "reports/system_update.html"
@@ -86,12 +93,14 @@ class SystemUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class FeatureListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = Feature
     template_name = "reports/pages.html"
     context_object_name = "features"
 
 
 class FeatureCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = Feature
     fields = ['name', 'description',]
     template_name = "reports/feature_create.html"
@@ -108,6 +117,7 @@ class FeatureCreateView(LoginRequiredMixin, CreateView):
 
 
 class FeatureUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = Feature
     fields = ['name', 'description']
     template_name = "reports/feature_update.html"
@@ -122,6 +132,7 @@ class FeatureUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class FeatureDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy("reports:login")
     model = Feature
     template_name = "reports/feature_detail.html"
     context_object_name = "feature_detail"
@@ -137,12 +148,14 @@ class FeatureDetailView(LoginRequiredMixin, DetailView):
 
 
 class TestCaseListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = TestCase
     template_name = "reports/testcases.html"
     context_object_name = "testcases"
 
 
 class TestCaseCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = TestCase
     fields = ['system', 'name', 'description',]
     template_name = "reports/testcase_create.html"
@@ -151,7 +164,7 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('reports:feature-detail',
                             kwargs={'pk': self.kwargs['pk']})
-   
+    
     def form_valid(self, form):
         form.instance.feature = Feature.objects.get(pk=self.kwargs['pk'])
         form.instance.created_by = self.request.user
@@ -159,6 +172,7 @@ class TestCaseCreateView(LoginRequiredMixin, CreateView):
 
 
 class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = TestCase
     fields = ['name', 'description']
     template_name = "reports/testcase_update.html"
@@ -169,12 +183,13 @@ class TestCaseUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ReportListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = Report
     template_name = "reports/reports.html"
     context_object_name = "reports"
 
-
 class ReportCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = Report
     fields = ['name', 'features',]
     template_name = "reports/report_create.html"
@@ -199,6 +214,7 @@ class ReportCreateView(LoginRequiredMixin, CreateView):
 
 
 class ReportDetailView(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy("reports:login")
     model = Report
     template_name = "reports/report_detail.html"
     context_object_name = "reports_detail"
@@ -210,6 +226,7 @@ class ReportDetailView(LoginRequiredMixin, DetailView):
 
 
 class ReportUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = Report
     fields = ["is_done"]
     template_name = "reports/reports_update.html"
@@ -223,12 +240,14 @@ class ReportUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class TestResultListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy("reports:login")
     model = TestResult
     template_name = "reports/result.html"
     context_object_name = "result"
 
 
 class TestResultCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy("reports:login")
     model = TestResult
     fields = '__all__'
     template_name = "reports/testresult_create.html"
@@ -237,6 +256,7 @@ class TestResultCreateView(LoginRequiredMixin, CreateView):
 
 
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy("reports:login")
     model = TestResult
     fields = '__all__'
     template_name = "reports/testresult_update.html"
