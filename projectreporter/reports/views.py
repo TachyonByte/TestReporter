@@ -78,7 +78,7 @@ class SystemCreateView(LoginRequiredMixin, CreateView):
 class SystemUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy("reports:login")
     model = System
-    fields = "__all__"
+    fields = ['name', 'description']
     template_name = "reports/system_update.html"
     context_object_name = "update_system"
 
@@ -88,6 +88,10 @@ class SystemUpdateView(LoginRequiredMixin, UpdateView):
             return referer_url
         else:
             return reverse_lazy('reports:projects')
+        
+    def form_valid(self, form):
+        form.instance.project = Project.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
 
 # Feature List, Create, Update Views
 
@@ -258,7 +262,13 @@ class TestResultCreateView(LoginRequiredMixin, CreateView):
 class TestResultUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy("reports:login")
     model = TestResult
-    fields = '__all__'
+    fields = ['comment', 'result']
     template_name = "reports/testresult_update.html"
     context_object_name = "update_result"
-    success_url = reverse_lazy("reports:projects")
+
+
+    def get_success_url(self):
+        return reverse_lazy('reports:project_detail',
+                            kwargs={'pk': self.kwargs['p_pk']})
+    
+
