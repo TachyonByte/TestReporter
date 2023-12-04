@@ -25,12 +25,12 @@
 
     <section class="content">
         <div class="container-fluid">
-            <div class="add text-right mb-3 me-3">
+            {% comment %} <div class="add text-right mb-3 me-3">
 
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
                     New report
                     </button>
-            </div>
+            </div> {% endcomment %}
             <div class="row ">
                 <div class="col-12">
                     <div class="card">
@@ -53,7 +53,7 @@
                                     {% for r in reports %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
-                                        <td>{{r.name}}</td>
+                                        <td><a href="{% url 'reports:report_detail' r.id %}">{{r.name}}</td></a>
                                         <td>
                                             <ul>
                                                 {% for n in r.features.all %}
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-default">
+        {% comment %} <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -100,7 +100,7 @@
 
             </div>
 
-        </div>
+        </div> {% endcomment %}
 
     </section>
 </div>

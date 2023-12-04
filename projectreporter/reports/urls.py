@@ -66,6 +66,6 @@ urlpatterns = [
     path('new-testresult/', TestResultCreateView.as_view(),
          name='new-testresult'),
     path('testresult', TestResultListView.as_view(), name='testresults'),
-    path('Updatde-testresult/<int:pk>/',
+    path('Update-testresult/<int:p_pk>/<int:pk>/',
          TestResultUpdateView.as_view(), name='update-testresult'),
 ]

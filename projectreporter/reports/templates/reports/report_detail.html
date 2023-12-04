@@ -44,7 +44,7 @@
             <td>{{r.tested_by}}<br> &bullet; <small>{{r.created_at}}</small></td>
             <td>{% if r.result == 'passed' %}
               {% else %}
-              <a href="{% url 'reports:update-testresult' r.id %}">
+              <a href="{% url 'reports:update-testresult' reports_detail.id r.id %}">
                 <i class="fa fa-pen-square" style="font-size: 25px; color: royalblue;"></i>
               </a>
               {% endif %}
